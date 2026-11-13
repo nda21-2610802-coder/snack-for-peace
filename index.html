@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SNACK for PEACE</title>
+<style>
+:root{--main:#00689D;--bg:#eaf6ff;--pt:#ffb703;--ink:#2b2f33;--card:#fff;--line:#cfe6f5}
+@media (prefers-color-scheme: dark){:root{--bg:#eaf6ff;--ink:#2b2f33;--card:#fff}}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:#c9e4f5;font-family:"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;color:var(--ink);display:flex;justify-content:center}
+#app{width:100%;max-width:430px;height:100%;background:var(--bg);display:flex;flex-direction:column;position:relative;overflow:hidden}
+header{background:var(--main);color:#fff;padding:calc(12px + env(safe-area-inset-top,0px)) 16px 12px;text-align:center}
+header h1{font-size:20px;letter-spacing:.5px}
+main{flex:1;overflow-y:auto;padding:14px 14px 8px}
+.screen{display:none}.screen.on{display:block}
+.card{background:var(--card);border-radius:18px;padding:14px;margin-bottom:12px;border:2px solid var(--line)}
+.card h2{font-size:17px;color:var(--main);margin-bottom:8px}
+.chips{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px;padding-bottom:2px}
+.chip{flex:none;height:24px;line-height:24px;padding:0 10px;border-radius:12px;background:#00689D;color:#fff;font-size:12px;font-weight:700;white-space:nowrap}
+.mascot{text-align:center}
+.face{font-size:76px;line-height:1.1;transition:transform .3s}
+.face.pop{transform:scale(1.25)}
+.bubble{background:#fff8e1;border:2px solid var(--pt);border-radius:16px;padding:10px 12px;margin-top:8px;font-size:15px;line-height:1.5}
+ul.how{list-style:none}
+ul.how li{padding:8px 0;font-size:15px;line-height:1.5;border-bottom:1px dashed var(--line)}
+ul.how li:last-child{border:0}
+.btn{display:block;width:100%;min-height:52px;border:0;border-radius:16px;background:var(--pt);color:#3a2a00;font-size:18px;font-weight:800;cursor:pointer;margin-top:10px}
+.btn.blue{background:var(--main);color:#fff}
+.btn:active{transform:scale(.98)}
+textarea{width:100%;min-height:96px;border:2px solid var(--line);border-radius:14px;padding:10px;font-size:16px;font-family:inherit;resize:none}
+.small{font-size:13px;color:#5b6670;margin-top:6px;line-height:1.5}
+.sent{background:#f4faff;border-left:5px solid var(--main);border-radius:10px;padding:8px 10px;margin-top:8px;font-size:15px;line-height:1.5}
+.ex{color:#8a6d00;font-size:12px;font-weight:700}
+.coupon{background:#fff8e1;border:3px dashed var(--pt);border-radius:16px;padding:12px;text-align:center;margin-top:10px;font-weight:800;font-size:16px;line-height:1.5}
+.check{display:flex;align-items:center;gap:12px;padding:12px 6px;border-bottom:1px dashed var(--line);font-size:16px;line-height:1.4;cursor:pointer}
+.check:last-child{border:0}
+.check input{width:26px;height:26px;accent-color:var(--main);flex:none}
+.opt{display:block;width:100%;min-height:50px;text-align:left;border:2px solid var(--line);background:#fff;border-radius:14px;padding:10px 12px;font-size:16px;margin-top:8px;cursor:pointer;font-family:inherit}
+.opt.me{border-color:var(--main);background:#e3f3fb}
+.bar{height:12px;background:#e6eef3;border-radius:6px;margin-top:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--main)}
+.ox{display:flex;gap:10px}
+.ox button{flex:1;min-height:76px;border:0;border-radius:18px;font-size:38px;font-weight:900;cursor:pointer;color:#fff}
+.ox .o{background:var(--main)}.ox .x{background:#e4572e}
+.q{font-size:18px;line-height:1.5;font-weight:700;margin-bottom:12px}
+.res{margin-top:10px;padding:10px;border-radius:12px;background:#f4faff;font-size:15px;line-height:1.5}
+.wheelwrap{position:relative;width:260px;height:260px;margin:14px auto 6px}
+.pointer{position:absolute;top:-12px;left:50%;margin-left:-14px;font-size:28px;z-index:2;color:#e4572e;line-height:1}
+.wheel{width:260px;height:260px;border-radius:50%;border:6px solid var(--main);background:conic-gradient(#bfe3f7 0 60deg,#ffe08a 60deg 120deg,#bfe3f7 120deg 180deg,#ffe08a 180deg 240deg,#bfe3f7 240deg 300deg,#ffe08a 300deg 360deg);position:relative;transition:transform 4s cubic-bezier(.15,.7,.1,1)}
+.wheel b{position:absolute;left:50%;top:50%;width:36px;height:36px;margin:-18px 0 0 -18px;font-size:28px;text-align:center;line-height:36px}
+.keyline{text-align:center;font-size:20px;font-weight:800;color:var(--main)}
+nav{display:flex;background:#fff;border-top:2px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav button{flex:1;border:0;background:none;padding:8px 2px;font-size:11px;font-weight:700;color:#6b7a85;cursor:pointer;font-family:inherit}
+nav button span{display:block;font-size:22px}
+nav button.on{color:var(--main);background:#e3f3fb}
+footer{text-align:center;font-size:11px;color:#5b6670;padding:6px 0 4px}
+.stat{display:flex;gap:8px}
+.stat div{flex:1;background:#f4faff;border-radius:12px;padding:8px;text-align:center;font-size:13px}
+.stat b{display:block;font-size:22px;color:var(--main)}
+</style>
+</head>
+<body>
+<div id="app">
+<header><h1>🐑 SNACK for PEACE</h1></header>
+<main>
+
+<section class="screen on" id="s-home">
+<div class="chips"><span class="chip">SDG 16 인권·정의·평화</span></div>
+<div class="card mascot">
+<div class="face" id="face">😢</div>
+<div class="bubble" id="hello">안녕! 나는 평화양이야. 평화 문장을 적어 주면 내 표정이 밝아져!</div>
+</div>
+<div class="card">
+<h2>이 앱으로 할 수 있는 일</h2>
+<ul class="how">
+<li>✍️ 평화에 관한 문장을 쓰면 등록돼요.</li>
+<li>🔑 문장을 등록하면 열쇠를 받고, 룰렛을 돌려 간식을 뽑아요.</li>
+<li>😊 등록하면 우는 표정이 웃는 표정으로 바뀌어요.</li>
+</ul>
+<button class="btn blue" onclick="go('write')">평화 문장 쓰러 가기</button>
+</div>
+<div class="card"><h2>우리 반 기록</h2>
+<div class="stat"><div><b id="n-sent">0</b>문장</div><div><b id="n-key">0</b>열쇠</div><div><b id="n-chal">0</b>실천</div><div><b id="n-quiz">0</b>퀴즈 정답</div></div></div>
+</section>
+
+<section class="screen" id="s-write">
+<div class="card mascot"><div class="face" id="face2">😢</div></div>
+<div class="card">
+<h2>평화 문장 쓰기</h2>
+<textarea id="txt" maxlength="80" placeholder="예) 다르다고 싸우지 않고 서로 이야기해요."></textarea>
+<div class="small"><span id="cnt">0</span>/80자 · 이름, 전화번호, 주소는 쓰지 마세요.</div>
+<button class="btn" onclick="addSent()">문장 등록하고 열쇠 받기 🔑</button>
+<div id="coupon"></div>
+</div>
+<div class="card"><h2>등록된 평화 문장</h2><div id="list"></div></div>
+</section>
+
+<section class="screen" id="s-roulette">
+<div class="card"><h2>간식 룰렛</h2>
+<div class="keyline">🔑 내 열쇠 <span id="keyN">0</span>개</div>
+<div class="small" style="text-align:center">1인당 열쇠는 2개까지만 받아요 · 받은 열쇠 <span id="keyE">0</span>/2</div>
+<div class="wheelwrap"><div class="pointer">▼</div><div class="wheel" id="wheel"></div></div>
+<div class="small" id="odds" style="text-align:center;line-height:1.7"></div>
+<button class="btn" onclick="spin()">열쇠로 룰렛 돌리기 🔑</button>
+<div id="spinMsg"></div></div>
+<div class="card"><h2>내가 뽑은 간식</h2><div id="won"></div></div>
+</section>
+
+<section class="screen" id="s-chal">
+<div class="card"><h2>오늘의 평화 챌린지</h2>
+<p class="small" style="margin:0 0 6px">한 일에 체크해 보세요. 체크할 때마다 참여 횟수가 올라가요.</p>
+<div id="chal"></div>
+<div class="bubble" id="chalMsg"></div></div>
+</section>
+
+<section class="screen" id="s-vote">
+<div class="card"><h2>투표: 평화를 위해 먼저 해야 할 일은?</h2>
+<div id="vote"></div>
+<p class="small">※ 막대의 기본 숫자는 (예시)이고, 내가 누른 표만 더해져요.</p></div>
+</section>
+
+<section class="screen" id="s-quiz">
+<div class="card"><h2>OX 퀴즈</h2>
+<div id="quiz"></div></div>
+</section>
+
+</main>
+<footer>팀 SNACK for PEACE · SDGs 창업팀</footer>
+<nav id="nav">
+<button class="on" data-t="home"><span>🏠</span>홈</button>
+<button data-t="write"><span>✍️</span>문장</button>
+<button data-t="roulette"><span>🎰</span>룰렛</button>
+<button data-t="chal"><span>✅</span>챌린지</button>
+<button data-t="vote"><span>🗳️</span>투표</button>
+<button data-t="quiz"><span>🧠</span>퀴즈</button>
+</nav>
+</div>
+
+<script>
+var KEY="snack4peace.v1";
+var MAXKEY=2;
+var PRIZES=[{e:"🐻",n:"하리보",p:35,col:"#bfe3f7"},{e:"🍪",n:"트윅스",p:25,col:"#ffe08a"},{e:"🍫",n:"초코팅촉",p:25,col:"#bfe3f7"},{e:"🥥",n:"코코팜",p:10,col:"#ffe08a"},{e:"🐑",n:"양 아크릴 키링",p:5,col:"#ffc2b8"}];
+var CHALS=["친구의 말을 끝까지 들어 줬어요","화가 날 때 3번 숨을 쉬고 말했어요","다른 나라 친구나 문화를 존중하는 말을 했어요","따돌림을 보면 도움을 청했어요","평화 문장을 가족에게 읽어 줬어요"];
+var VOTES=["대화로 문제 풀기","서로 다름 존중하기","약속 지키기","도움이 필요한 사람 돕기"];
+var QUIZ=[
+{q:"전쟁을 멈추려면 서로 대화하고 약속을 지키는 것이 중요하다.",a:true,e:"대화와 약속은 평화의 기본이에요."},
+{q:"나와 생각이 다른 사람은 무조건 나쁜 사람이다.",a:false,e:"생각이 달라도 존중할 수 있어요."},
+{q:"SDG 16은 평화·정의·튼튼한 제도에 관한 목표다.",a:true,e:"SDG 16은 인권·정의·평화를 다뤄요."},
+{q:"작은 말 한마디는 평화와 아무 상관이 없다.",a:false,e:"고운 말 한마디가 평화의 시작이에요."}];
+var d;
+function load(){try{d=JSON.parse(localStorage.getItem(KEY))}catch(e){d=null}
+ if(!d){d={sents:[{t:"서로 다른 생각도 존중하면 평화가 와요.",ex:1},{t:"총 대신 대화로 문제를 풀면 좋겠어요.",ex:1},{t:"작은 친절이 큰 평화를 만들어요.",ex:1}],chal:[],cnt:0,vote:-1,qi:0,qs:0,done:false,keys:0,won:[]}}
+ if(d.keys==null)d.keys=0;if(d.keys>MAXKEY)d.keys=MAXKEY;if(!d.won)d.won=[];if(d.earned==null)d.earned=Math.min(MAXKEY,d.keys+d.won.length);}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
+function $(i){return document.getElementById(i)}
+function esc(s){return s.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function go(t){
+ var s=document.querySelectorAll(".screen"),b=document.querySelectorAll("nav button");
+ for(var i=0;i<s.length;i++)s[i].classList.remove("on");
+ for(i=0;i<b.length;i++)b[i].classList.toggle("on",b[i].dataset.t===t);
+ $("s-"+t).classList.add("on");$("s-"+t).parentNode.scrollTop=0;}
+$("nav").addEventListener("click",function(e){var b=e.target.closest("button");if(b)go(b.dataset.t)});
+function face(){
+ var happy=d.sents.some(function(s){return !s.ex});
+ var f=happy?"😊":"😢";
+ $("face").textContent=f;$("face2").textContent=f;
+ $("hello").textContent=happy?"고마워! 평화 문장 덕분에 웃을 수 있어! 더 적어 줄래?":"안녕! 나는 평화양이야. 평화 문장을 적어 주면 내 표정이 밝아져!";
+ var n=d.sents.filter(function(s){return !s.ex}).length;
+ $("n-sent").textContent=n;$("n-chal").textContent=d.cnt;$("n-quiz").textContent=d.qs;$("n-key").textContent=d.keys;$("keyN").textContent=d.keys;$("keyE").textContent=d.earned;}
+function renderList(){
+ $("list").innerHTML=d.sents.map(function(s){return '<div class="sent">'+esc(s.t)+(s.ex?' <span class="ex">(예시)</span>':'')+'</div>'}).join("");}
+$("txt").addEventListener("input",function(){$("cnt").textContent=this.value.length});
+function addSent(){
+ var v=$("txt").value.trim();
+ if(v.length<5){$("coupon").innerHTML='<div class="res">문장을 5글자 이상 써 주세요.</div>';return}
+ if(/\d{3,}/.test(v)){$("coupon").innerHTML='<div class="res">숫자가 길게 들어 있어요. 전화번호 같은 개인정보는 쓰지 마세요.</div>';return}
+ var got=false;d.sents.unshift({t:v});if(d.earned<MAXKEY){d.keys++;d.earned++;got=true}save();
+ $("txt").value="";$("cnt").textContent="0";
+ $("coupon").innerHTML='<div class="coupon">🎉 등록 완료!<br>'+(got?'🔑 열쇠를 1개 얻었어요! ('+d.earned+'/'+MAXKEY+')':'🔑 열쇠를 이미 2개 모두 받았어요.')+'<br><span class="small">열쇠는 1인당 2개까지만 받을 수 있어요.</span></div><button class="btn blue" onclick="go(\'roulette\')">룰렛 돌리러 가기 🎰</button>';
+ face();renderList();
+ ["face","face2"].forEach(function(i){var f=$(i);f.classList.add("pop");setTimeout(function(){f.classList.remove("pop")},400)});}
+function renderChal(){
+ $("chal").innerHTML=CHALS.map(function(c,i){return '<label class="check"><input type="checkbox" data-i="'+i+'"'+(d.chal.indexOf(i)>-1?' checked':'')+'><span>'+c+'</span></label>'}).join("");
+ var k=d.chal.length;
+ $("chalMsg").textContent=k===0?"아직 체크한 게 없어요. 하나만 해 볼까요?":k<CHALS.length?"좋아요! "+k+"개 실천했어요.":"대단해요! 오늘 챌린지를 모두 해냈어요! 🎉";}
+$("chal").addEventListener("change",function(e){
+ var i=+e.target.dataset.i,p=d.chal.indexOf(i);
+ if(e.target.checked&&p<0){d.chal.push(i);d.cnt++}
+ else if(!e.target.checked&&p>-1){d.chal.splice(p,1);d.cnt=Math.max(0,d.cnt-1)}
+ save();renderChal();face();});
+var BASE=[8,6,5,4];
+function renderVote(){
+ var tot=0,arr=BASE.map(function(b,i){var n=b+(d.vote===i?1:0);tot+=n;return n});
+ $("vote").innerHTML=VOTES.map(function(v,i){
+  var pc=Math.round(arr[i]/tot*100);
+  return '<button class="opt'+(d.vote===i?' me':'')+'" data-i="'+i+'">'+v+(d.vote===i?' ✔':'')+'<div class="bar"><i style="width:'+pc+'%"></i></div><span class="small">'+arr[i]+'표 · '+pc+'% (예시 포함)</span></button>'}).join("");}
+$("vote").addEventListener("click",function(e){var b=e.target.closest(".opt");if(!b)return;d.vote=+b.dataset.i;save();renderVote();});
+function renderQuiz(){
+ var q=QUIZ[d.qi];
+ if(!q||d.done){$("quiz").innerHTML='<div class="q">퀴즈 끝! 🎉<br>'+d.qs+' / '+QUIZ.length+' 문제 맞혔어요.</div><button class="btn blue" onclick="resetQuiz()">다시 풀기</button>';return}
+ $("quiz").innerHTML='<div class="small">'+(d.qi+1)+' / '+QUIZ.length+'번</div><div class="q">'+q.q+'</div><div class="ox"><button class="o" onclick="ans(true)">O</button><button class="x" onclick="ans(false)">X</button></div><div id="qr"></div>';}
+function ans(v){
+ var q=QUIZ[d.qi],ok=(v===q.a);
+ if(ok)d.qs++;
+ var last=d.qi>=QUIZ.length-1;
+ $("qr").innerHTML='<div class="res">'+(ok?'⭕ 정답!':'❌ 아쉬워요.')+' '+q.e+'</div><button class="btn blue" onclick="next()">'+(last?'결과 보기':'다음 문제')+'</button>';
+ var bs=document.querySelectorAll(".ox button");for(var i=0;i<bs.length;i++)bs[i].disabled=true;
+ save();face();}
+function next(){d.qi++;if(d.qi>=QUIZ.length)d.done=true;save();renderQuiz();}
+function resetQuiz(){d.qi=0;d.qs=0;d.done=false;save();renderQuiz();face();}
+var rot=0,spinning=false;
+function buildWheel(){
+ var st=0,stops=[],html="";
+ PRIZES.forEach(function(p){
+  var a=p.p*3.6;p.c=st+a/2;
+  stops.push(p.col+" "+st+"deg "+(st+a)+"deg");
+  html+='<b style="transform:rotate('+p.c+'deg) translateY(-92px)">'+p.e+'</b>';
+  st+=a;});
+ $("wheel").style.background="conic-gradient("+stops.join(",")+")";
+ $("wheel").innerHTML=html;
+ $("odds").innerHTML=PRIZES.map(function(p){return p.e+" "+p.n+" "+p.p+"%"}).join("<br>");}
+function renderWon(){
+ $("won").innerHTML=d.won.length?d.won.slice(0,10).map(function(w){return '<div class="sent">'+esc(w)+'</div>'}).join(""):'<div class="small">아직 뽑은 간식이 없어요.</div>';}
+function spin(){
+ if(spinning)return;
+ if(d.keys<1){$("spinMsg").innerHTML='<div class="res">'+(d.earned>=MAXKEY?'열쇠를 모두 사용했어요. 열쇠는 1인당 2개까지만 받을 수 있어요.':'열쇠가 없어요. 평화 문장을 등록하면 열쇠를 받아요! ✍️')+'</div>';return}
+ spinning=true;d.keys--;save();face();
+ $("spinMsg").innerHTML="";
+ var r=Math.random()*100,acc=0,i=0;
+ for(var k=0;k<PRIZES.length;k++){acc+=PRIZES[k].p;if(r<acc){i=k;break}}
+ var c=PRIZES[i].c;
+ rot+=360*5+((360-c)-(rot%360)+360)%360;
+ $("wheel").style.transform="rotate("+rot+"deg)";
+ setTimeout(function(){
+  var p=PRIZES[i];
+  {var t=p.e+" "+p.n;d.won.unshift(t);$("spinMsg").innerHTML='<div class="coupon">🎉 축하해요!<br>'+t+'<br><span class="small">만나서 이 화면을 보여 주세요.</span></div>'}
+  save();face();renderWon();spinning=false;
+ },4200);}
+load();buildWheel();face();renderList();renderChal();renderVote();renderQuiz();renderWon();
+</script>
+</body>
+</html>
